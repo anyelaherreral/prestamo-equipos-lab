@@ -14,9 +14,9 @@ El laboratorio de la facultad presta equipos (portátiles, osciloscopios, kits d
 | Solicitante (estudiante o docente) | Es la persona que recibe el equipo. No opera el sistema (A-01). |
 
 ## 3. Alcance
-**Dentro:** persistencia de datos, interfaz para operar el sistema, las 4 reglas de negocio y una consulta de préstamos vencidos.
-**Fuera:** autenticación avanzada, pagos reales, despliegue en producción, integraciones externas, renovación de préstamos.
-**Segundo incremento (después de las 4 reglas del enunciado):** sanciones al solicitante por devolución tardía o con novedad (A-08, A-09).
+**Dentro:** persistencia de datos, interfaz para operar el sistema, autenticación básica por encargado (usuario y contraseña con hash), las 4 reglas de negocio y una consulta de préstamos vencidos.
+**Fuera:** autenticación avanzada (roles, recuperación de contraseña, OAuth), pagos reales, despliegue en producción, integraciones externas, renovación de préstamos.
+**Segundo incremento (después de las 4 reglas del enunciado):** catálogo de tipos de sanción.
 
 ## 4. Requisitos funcionales
 | ID | Requisito |
@@ -30,7 +30,7 @@ El laboratorio de la facultad presta equipos (portátiles, osciloscopios, kits d
 | RF-07 | El sistema debe permitir liberar un equipo bloqueado por novedad. |
 | RF-08 | El sistema debe permitir consultar equipos disponibles. |
 | RF-09 | El sistema debe permitir listar préstamos vencidos a una fecha, con días de atraso. |
-| RF-10 | El sistema debe permitir gestionar encargados y registrar qué encargado hizo cada préstamo, devolución y liberación, con fecha y hora. |
+| RF-10 | El sistema debe permitir gestionar encargados con usuario y contraseña, iniciar sesión y registrar qué encargado hizo cada préstamo, devolución y liberación, con fecha y hora. La identidad sale de la sesión del servidor. |
 
 ## 5. Reglas de negocio
 | ID | Regla |
@@ -49,7 +49,7 @@ Formato: fuente → estímulo → artefacto → entorno → respuesta → **medi
 | QA-02 | Modificabilidad | El laboratorio cambia el plazo de una categoría. | 0 archivos de código modificados (es un dato, no una constante). |
 | QA-03 | Desempeño | El encargado consulta los préstamos vencidos con 10.000 préstamos registrados. | p95 < 500 ms en ejecución local. |
 | QA-04| Trazabilidad | Se pierde un equipo y se necesita saber quién lo tuvo y qué encargado lo entregó y lo recibió. | Historial completo del equipo reconstruible desde la BD, con solicitante, encargado y fecha de cada movimiento. |
-
+| QA-05 | Seguridad | Un encargado intenta registrar un préstamo a nombre de otro enviando otro encargado_id, o una persona sin sesión intenta operar. | El servidor ignora el dato del cliente y usa la sesión; sin sesión responde 401. 0 registros con un encargado distinto al de la sesión; 0 credenciales en el repo; contraseñas solo con hash. |
 
 ## 7. Stack provisional (cada elección se justifica en un ADR)
 - Backend: Java, Spring Boot, Maven.
