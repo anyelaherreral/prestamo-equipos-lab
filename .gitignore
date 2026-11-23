@@ -22,3 +22,22 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+
+# Compilados y dependencias de Maven
+target/
+
+# Credenciales y configuración local (nunca al repositorio)
+.env
+.env.*
+application-local.properties
+application-*.local.properties
+
+# Editores
+.idea/
+*.iml
+.vscode/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
