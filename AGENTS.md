@@ -26,13 +26,14 @@ Reglas para el agente:
 - Arquitectura: monolito en capas (controller, service, repository), sin colas ni microservicios
 
 ## Modelo conceptual (borrador, por confirmar)
-- **Encargado:** id, nombre, activo
+- **Encargado:** id, nombre, usuario (único), password_hash, activo.
 - **CategoriaEquipo:** id, nombre, plazo_dias
 - **Equipo:** unidad física con código único (Tensiómetro-1, Tensiómetro-2); id, código, nombre, categoria_id; el modelado de "en mantenimiento" y "bloqueado por novedad" está pendiente de ADR
 - **Solicitante:** id, nombre, documento, tipo (estudiante o docente)
 - **Prestamo:** id, fecha_hora_prestamo, fecha_limite, equipo_id, solicitante_id, encargado_id (quien lo registró). Un préstamo = un equipo.
-- **Devolucion:** id, fecha_hora, prestamo_id, novedad (nullable), encargado_id (quien la recibió)
+- **Devolucion:** id, fecha_hora, prestamo_id,agrega tipo_sancion_id. novedad (nullable), encargado_id (quien la recibió)
 - **Sancion (segundo incremento):** solicitante_id, devolucion_id, motivo, fecha_inicio, fecha_levantada (nullable), encargado_id que la levantó. "Vigente" = aún no levantada, se deriva.
+- **TipoSancion (segundo incremento):** id, nombre, condicion_levantamiento (texto).
 
 Estados "vencido", "disponible" y "sanción vigente" se derivan, no se guardan (ver Principios). Un equipo con préstamo activo no pasa a mantenimiento hasta devolverse (A-07).
 
@@ -51,6 +52,7 @@ Listado de préstamos vencidos a la fecha, con días de atraso.
 - No almacenar información derivada que pueda calcularse de forma confiable (por ejemplo, "vencido" y "días de atraso").
 - Usar restricciones de la base de datos para invariantes estructurales (por ejemplo, un solo préstamo activo por equipo).
 - La API se diseña desde el uso, no desde las tablas: DTOs, no entidades JPA.
+-El encargado que registra una acción sale siempre de la sesión autenticada en el servidor, nunca de un parámetro que envíe el cliente.
 
 ## Fuera de alcance
 Autenticación avanzada, pagos reales, despliegue en producción e integraciones externas.
