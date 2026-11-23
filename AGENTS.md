@@ -31,8 +31,8 @@ Reglas para el agente:
 - **Equipo:** unidad física con código único (Tensiómetro-1, Tensiómetro-2); id, código, nombre, categoria_id; el modelado de "en mantenimiento" y "bloqueado por novedad" está pendiente de ADR
 - **Solicitante:** id, nombre, documento, tipo (estudiante o docente)
 - **Prestamo:** id, fecha_hora_prestamo, fecha_limite, equipo_id, solicitante_id, encargado_id (quien lo registró). Un préstamo = un equipo.
-- **Devolucion:** id, fecha_hora, prestamo_id,agrega tipo_sancion_id. novedad (nullable), encargado_id (quien la recibió)
-- **Sancion (segundo incremento):** solicitante_id, devolucion_id, motivo, fecha_inicio, fecha_levantada (nullable), encargado_id que la levantó. "Vigente" = aún no levantada, se deriva.
+- **Devolucion:** id, fecha_hora, prestamo_id, novedad (nullable), encargado_id (quien la recibió)
+- **Sancion (segundo incremento):** id, solicitante_id, devolucion_id, tipo_sancion_id, fecha_inicio, fecha_levantada (nullable), encargado_id que la levantó. "Vigente" = aún no levantada, se deriva.
 - **TipoSancion (segundo incremento):** id, nombre, condicion_levantamiento (texto).
 
 Estados "vencido", "disponible" y "sanción vigente" se derivan, no se guardan (ver Principios). Un equipo con préstamo activo no pasa a mantenimiento hasta devolverse (A-07).
@@ -53,9 +53,10 @@ Listado de préstamos vencidos a la fecha, con días de atraso.
 - Usar restricciones de la base de datos para invariantes estructurales (por ejemplo, un solo préstamo activo por equipo).
 - La API se diseña desde el uso, no desde las tablas: DTOs, no entidades JPA.
 -El encargado que registra una acción sale siempre de la sesión autenticada en el servidor, nunca de un parámetro que envíe el cliente.
+- El encargado que registra una acción sale siempre de la sesión autenticada en el servidor, nunca de un parámetro que envíe el cliente.
 
 ## Fuera de alcance
-Autenticación avanzada, pagos reales, despliegue en producción e integraciones externas.
+Autenticación avanzada (roles, OAuth, recuperación de contraseña), renovación de préstamos, pagos reales, despliegue en producción e integraciones externas.
 
 ## Documentación
 - `README.md`: qué es, cómo ejecutarlo desde cero.
@@ -65,7 +66,7 @@ Autenticación avanzada, pagos reales, despliegue en producción e integraciones
 - `docs/adr/`: decisiones de arquitectura y diseño.
 
 ## Estado del diseño
-(Actualizar al cierre de cada sesión: qué está decidido, qué está implementado, qué se verificó y qué sigue pendiente.)
+**2026-11-23.** Decididos: alcance, requisitos y atributos de calidad (`docs/BRIEF.md`), asunciones A-01 a A-15 (`ASSUMPTIONS.md`), stack provisional (Spring Boot, PostgreSQL, front HTML/JS) y arquitectura de monolito en capas. Pendientes: modelo de datos (incluye cómo se guardan "en mantenimiento" y "bloqueado por novedad"), los ADR, y los tipos de sanción (A-16). No hay código ni base de datos creados todavía; nada se ha implementado ni probado.
 
 ## Errores frecuentes del agente
 - (fecha) El agente hizo X porque no sabía Y → regla agregada: ...
