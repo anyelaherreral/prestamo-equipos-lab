@@ -21,16 +21,16 @@ El laboratorio de la facultad presta equipos (portátiles, osciloscopios, kits d
 ## 4. Requisitos funcionales
 | ID | Requisito |
 |---|---|
-| RF-01 | Gestionar categorías de equipo, cada una con su plazo de préstamo en días. |
-| RF-02 | Gestionar equipos (categoría, estado: disponible / en mantenimiento / bloqueado por novedad). |
-| RF-03 | Gestionar solicitantes. |
-| RF-04 | Registrar un préstamo de un equipo a un solicitante, calculando la fecha límite según la categoría. |
-| RF-05 | Registrar la devolución de un préstamo, con o sin novedad (daño, faltante). |
-| RF-06 | Marcar un equipo en mantenimiento y sacarlo de mantenimiento. |
-| RF-07 | Liberar un equipo bloqueado por novedad. |
-| RF-08 | Consultar equipos disponibles. |
-| RF-09 | **Consulta obligatoria:** listar préstamos vencidos a una fecha, con días de atraso. |
-| RF-10 | Gestionar encargados y registrar qué encargado hizo cada préstamo, devolución y liberación, con fecha y hora. |
+| RF-01 | El sistema debe permitir gestionar categorías de equipo, cada una con su plazo de préstamo en días. |
+| RF-02 | El sistema debe permitir gestionar equipos (categoría, estado: disponible / en mantenimiento / bloqueado por novedad). |
+| RF-03 | El sistema debe permitir gestionar solicitantes. |
+| RF-04 | El sistema debe permitir registrar un préstamo de un equipo a un solicitante, calculando la fecha límite según la categoría. |
+| RF-05 | El sistema debe permitir registrar la devolución de un préstamo, con o sin novedad (daño, faltante). |
+| RF-06 | El sistema debe permitir marcar un equipo en mantenimiento y sacarlo de mantenimiento. |
+| RF-07 | El sistema debe permitir liberar un equipo bloqueado por novedad. |
+| RF-08 | El sistema debe permitir consultar equipos disponibles. |
+| RF-09 | El sistema debe permitir listar préstamos vencidos a una fecha, con días de atraso. |
+| RF-10 | El sistema debe permitir gestionar encargados y registrar qué encargado hizo cada préstamo, devolución y liberación, con fecha y hora. |
 
 ## 5. Reglas de negocio
 | ID | Regla |
